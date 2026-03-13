@@ -6,8 +6,8 @@ typedef signed char int8_t;
 typedef signed int int32_t;
 typedef short int16_t;
 
-inline float fminf(float a, float b) { return (a < b) ? a : b; }
-inline float fmaxf(float a, float b) { return (a > b) ? a : b; }
+float fminf(float a, float b) { return (a < b) ? a : b; }
+float fmaxf(float a, float b) { return (a > b) ? a : b; }
 
 // ── Per-model parameter ranges (Manual p. 63) ─────────────────────────────
 typedef struct {
