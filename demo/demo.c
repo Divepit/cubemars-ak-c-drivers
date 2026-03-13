@@ -1,4 +1,4 @@
-/*
+ /*
  * demo.c — ncurses TUI for CubeMars AK motor drivers over SocketCAN
  *
  * Layout:
@@ -426,20 +426,6 @@ static void edit_motor_id_popup(AppState *s)
     delwin(pop);
     touchwin(stdscr);
     refresh();
-}
-
-/* ── MIT feedback decode ────────────────────────────────────────────────── */
-
-static void decode_mit_fb(const uint8_t d[8],
-                           float *pos, float *vel, float *torque)
-{
-    const MotorModel *m = &MOTOR_MODELS[ak_model_idx];
-    int p_int = (d[1] << 8) | d[2];
-    int v_int = (d[3] << 4) | (d[4] >> 4);
-    int t_int = ((d[4] & 0x0F) << 8) | d[5];
-    *pos    = uint_to_float(p_int, -12.5f,    12.5f,    16);
-    *vel    = uint_to_float(v_int, -m->v_max,  m->v_max, 12);
-    *torque = uint_to_float(t_int, -m->t_max,  m->t_max, 12);
 }
 
 /* ── send selected command ──────────────────────────────────────────────── */

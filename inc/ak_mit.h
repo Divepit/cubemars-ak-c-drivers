@@ -42,6 +42,8 @@ typedef struct {
     uint8_t len;
 } AKMotorMITMessage;
 
+void decode_mit_fb(const uint8_t d[8], float *pos, float *vel, float *torque);
+
 // Pack an MIT mode command into 8 bytes using the active motor model's ranges
 void pack_mit_cmd(uint8_t out[8], float p_des, float v_des, float kp, float kd, float t_ff);
 

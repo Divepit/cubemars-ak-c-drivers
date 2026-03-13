@@ -15,6 +15,18 @@ inline float uint_to_float(int x_int, float x_min, float x_max, int bits) {
     return ((float)x_int) * span / ((float)((1 << bits) - 1)) + x_min;
 }
 
+void decode_mit_fb(const uint8_t d[8],
+                           float *pos, float *vel, float *torque)
+{
+    const MotorModel *m = &MOTOR_MODELS[ak_model_idx];
+    int p_int = (d[1] << 8) | d[2];
+    int v_int = (d[3] << 4) | (d[4] >> 4);
+    int t_int = ((d[4] & 0x0F) << 8) | d[5];
+    *pos    = uint_to_float(p_int, -12.5f,    12.5f,    16);
+    *vel    = uint_to_float(v_int, -m->v_max,  m->v_max, 12);
+    *torque = uint_to_float(t_int, -m->t_max,  m->t_max, 12);
+}
+
 inline void pack_mit_cmd(uint8_t out[8],
                          float p_des, float v_des,
                          float kp,    float kd, float t_ff)
